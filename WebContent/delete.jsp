@@ -8,9 +8,12 @@
 	String password = request.getParameter("password");
 	
 	GuestBookDAO dao = new GuestBookDAO(new MySQLWebDBConnection());
-	dao.delete(Integer.parseInt(no), password);	
+	int chk = dao.delete(Integer.parseInt(no), password);	
 	
-	response.sendRedirect("/guestbook");
+	if(chk>0)
+		response.sendRedirect("/guestbook");
+	else
+		response.sendRedirect("/guestbook/deletefail.jsp?no="+no);
 %>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
@@ -19,6 +22,7 @@
 <title>Insert title here</title>
 </head>
 <body>
-	<h1>성공했습니다.</h1>
+
+	<!-- <h1>성공했습니다.</h1> -->
 </body>
 </html>

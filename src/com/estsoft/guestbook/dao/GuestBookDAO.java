@@ -18,9 +18,10 @@ public class GuestBookDAO {
 		this.dbConnection = dbConnection;
 	}
 	
-	public void delete(int no, String password){
+	public int delete(int no, String password){
 		Connection conn = null;
 		PreparedStatement pstmt = null;
+		int cnt = -1;
 		
 		try{
 			conn = dbConnection.getConnection();
@@ -36,7 +37,7 @@ public class GuestBookDAO {
 			/*pstmt.setLong(1, Long.parseLong(no));*/
 			pstmt.setString(2, password);
 			
-			pstmt.executeUpdate();
+			cnt = pstmt.executeUpdate();	// 1 이상 성공
 			
 		} catch(SQLException ex){
 			System.out.println("error:"+ex);
@@ -49,6 +50,7 @@ public class GuestBookDAO {
 				ex.printStackTrace();
 			}
 		}
+		return cnt;
 	}
 	
 	public void insert(GuestBookVO vo){
